@@ -12,7 +12,7 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@4.3.3
       with:
         server: taikun.ddns.net
-        username: ${{ secrets.FTP_USER }}
+        username: taikun
         password: ${{ secrets.FTP_PASSWORD }}
         protocol: ftps
         port: 8922
