@@ -31,6 +31,17 @@ python -m playwright install
 python -m playwright install-deps
 ```
 
+### Fastapi
+Install dependencies and uvicorn (embedded server)
+```shell
+    pip install "fastapi[all]"
+```
+
+To execute:
+```shell
+    uvicorn main:app --reload
+```
+
 ### Environment Variables
 
 Set the environment variables for your email and password as follows:
