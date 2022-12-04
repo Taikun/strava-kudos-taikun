@@ -11,9 +11,8 @@ jobs:
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.3
       with:
-        server: taikun.ddns.net
+        server: 79.116.54.122
         username: taikun
         password: ${{ secrets.FTP_PASSWORD }}
         protocol: ftps
         port: 8922
-        server-dir: kudos/
