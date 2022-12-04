@@ -16,3 +16,4 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         protocol: ftps
         port: 8922
+        server-dir: kudos/
