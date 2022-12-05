@@ -1,14 +1,20 @@
 import os
 import requests
+from jproperties import Properties
 
 def send_to_telegram(message):
 
-    apiToken = os.environ.get('TOKEN_ID')
-    chatID = os.environ.get('CHAT_ID')
-    apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
+    configs = Properties()
+    with open('app-config.properties', 'rb') as config_file:
+        configs.load(config_file)
+    TOKEN_ID=configs.get("TOKEN_ID'")
+    CHAT_ID=configs.get("CHAT_ID'")
+
+    
+    apiURL = f'https://api.telegram.org/bot{TOKEN_ID}/sendMessage'
 
     try:
-        response = requests.post(apiURL, json={'chat_id': chatID, 'text': message})
+        response = requests.post(apiURL, json={'chat_id': CHAT_ID, 'text': message})
         print(response.text)
     except Exception as e:
         print(e)

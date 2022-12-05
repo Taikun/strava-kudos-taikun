@@ -1,10 +1,17 @@
 import os
 import time
 import send_telegram
+from jproperties import Properties
 
 from playwright.sync_api import sync_playwright, TimeoutError
 
 BASE_URL = "https://www.strava.com/"
+
+configs = Properties()
+with open('app-config.properties', 'rb') as config_file:
+    configs.load(config_file)
+STRAVA_EMAIL=configs.get("STRAVA_EMAIL")
+STRAVA_PASSWORD=configs.get("STRAVA_PASSWORD")
 
 class KudosGiver:
     """
@@ -13,12 +20,9 @@ class KudosGiver:
     until no more kudos can be given at this time.
     """
     def __init__(self, max_retry_scroll=3, max_run_duration=540) -> None:
-        self.EMAIL = os.environ.get('STRAVA_EMAIL')
-        self.PASSWORD = os.environ.get('STRAVA_PASSWORD')
-
-        if self.EMAIL is None or self.PASSWORD is None:
-            raise Exception(f"Must set environ variables EMAIL AND PASSWORD. \
-                e.g. run export STRAVA_EMAIL=YOUR_EMAIL")
+        if STRAVA_EMAIL is None or STRAVA_PASSWORD is None:
+            raise Exception(f"EMAIL AND PASSWORD configuration missing. \
+                check configuration file in server")
 
         self.max_retry_scroll = max_retry_scroll
         self.max_run_duration = max_run_duration

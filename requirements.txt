@@ -1,2 +1,5 @@
 playwright==1.27.1
 pytest-playwright
+fastapi
+"uvicorn[standard]"
+jproperties
