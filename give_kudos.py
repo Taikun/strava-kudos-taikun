@@ -7,13 +7,18 @@ from playwright.sync_api import sync_playwright, TimeoutError
 
 BASE_URL = "https://www.strava.com/"
 
+
 configs = Properties()
 with open('app-config.properties', 'rb') as config_file:
     configs.load(config_file)
-STRAVA_EMAIL=configs.get("STRAVA_EMAIL")
-STRAVA_PASSWORD=configs.get("STRAVA_PASSWORD")
+STRAVA_EMAIL=configs.get("STRAVA_EMAIL").data
+STRAVA_PASSWORD=configs.get("STRAVA_PASSWORD").data
+print('Mail: ' + STRAVA_EMAIL)
+print('Pwd: ' + STRAVA_PASSWORD)
 
 class KudosGiver:
+
+
     """
     Logins into Strava and gives kudos to all activities under
     Following. Additionally, scrolls down to check for more activities
@@ -39,8 +44,8 @@ class KudosGiver:
         Login using email and password
         """
         self.page.goto(os.path.join(BASE_URL, 'login'))
-        self.page.fill('#email', self.EMAIL)
-        self.page.fill("#password", self.PASSWORD)
+        self.page.fill('#email', STRAVA_EMAIL)
+        self.page.fill("#password", STRAVA_PASSWORD)
         self.page.click("button[type='submit']")
         print("---Logged in!!---")
         self.page.goto(os.path.join(BASE_URL, "dashboard"), wait_until="domcontentloaded")

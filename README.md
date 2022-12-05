@@ -38,9 +38,9 @@ Install dependencies and uvicorn (embedded server)
     pip install "uvicorn[standard]"
 ```
 
-To execute:
+To execute, Important! Don't run uvicorn with reload True otherwise playwright is goingo to fail:
 ```shell
-    python -m uvicorn main:app --reload
+    python -m uvicorn main:app
 ```
 
 ### Environment Variables

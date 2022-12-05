@@ -7,8 +7,8 @@ def send_to_telegram(message):
     configs = Properties()
     with open('app-config.properties', 'rb') as config_file:
         configs.load(config_file)
-    TOKEN_ID=configs.get("TOKEN_ID'")
-    CHAT_ID=configs.get("CHAT_ID'")
+    TOKEN_ID=configs.get("TOKEN_ID").data
+    CHAT_ID=configs.get("CHAT_ID").data
 
     
     apiURL = f'https://api.telegram.org/bot{TOKEN_ID}/sendMessage'
