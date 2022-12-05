@@ -35,11 +35,12 @@ python -m playwright install-deps
 Install dependencies and uvicorn (embedded server)
 ```shell
     pip install "fastapi[all]"
+    pip install "uvicorn[standard]"
 ```
 
 To execute:
 ```shell
-    uvicorn main:app --reload
+    python -m uvicorn main:app --reload
 ```
 
 ### Environment Variables
