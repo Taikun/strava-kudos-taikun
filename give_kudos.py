@@ -13,7 +13,7 @@ BASE_URL = "https://www.strava.com/"
 
 
 configs = Properties()
-with open('app-config.properties', 'rb') as config_file:
+with open('kudos.properties', 'rb') as config_file:
     configs.load(config_file)
 STRAVA_EMAIL=configs.get("STRAVA_EMAIL").data
 STRAVA_PASSWORD=configs.get("STRAVA_PASSWORD").data
