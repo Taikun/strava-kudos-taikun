@@ -32,4 +32,6 @@ def kudos(token: str):
         kg.give_kudos()
     else:
         print('Missing token')
+
+    #FIXME: something worng happens after finih give_kudos: AttributeError: 'list' object has no attribute 'encode'
     return {"Give kudos done sucessfully"}
