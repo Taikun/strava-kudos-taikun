@@ -14,7 +14,7 @@ from datetime import datetime
 app = FastAPI()
 
 configs = Properties()
-with open('app-config.properties', 'rb') as config_file:
+with open('kudos.properties', 'rb') as config_file:
     configs.load(config_file)
 EXPECTED_TOKEN=configs.get("TOKEN").data
 
