@@ -2,8 +2,12 @@ import os
 import time
 import send_telegram
 from jproperties import Properties
+import traceback
+
 
 from playwright.sync_api import sync_playwright, TimeoutError
+from playwright.async_api import async_playwright
+
 
 BASE_URL = "https://www.strava.com/"
 
@@ -16,9 +20,7 @@ STRAVA_PASSWORD=configs.get("STRAVA_PASSWORD").data
 print('Mail: ' + STRAVA_EMAIL)
 print('Pwd: ' + STRAVA_PASSWORD)
 
-class KudosGiver:
-
-
+class KudosGiver():
     """
     Logins into Strava and gives kudos to all activities under
     Following. Additionally, scrolls down to check for more activities
@@ -28,8 +30,7 @@ class KudosGiver:
         if STRAVA_EMAIL is None or STRAVA_PASSWORD is None:
             raise Exception(f"EMAIL AND PASSWORD configuration missing. \
                 check configuration file in server")
-
-        self.max_retry_scroll = max_retry_scroll
+        self.max_retry_scroll = max_retry_scroll 
         self.max_run_duration = max_run_duration
         self.kudos_button_pattern = '[data-testid="kudos_button"]'
         p = sync_playwright().start()
@@ -74,26 +75,31 @@ class KudosGiver:
         """
         Scroll through pages to give kudos that are giveable.
         """
-        ## Give Kudos on loaded page ##
-        button_locator = self.page.locator(self.kudos_button_pattern)
-        kudos_given = self.locate_kudos_buttons_and_maybe_give_kudos(button_locator=button_locator)
-        curr_retry = self.max_retry_scroll
-
-        ## Scroll down and repeat ##
-        while kudos_given or curr_retry > 0:
-            curr_duration = time.time() - self.start_time
-            if curr_duration > self.max_run_duration:
-                print("Max run duration reached.")
-                break
-            self.page.mouse.wheel(0, 12000)
-            time.sleep(5)
+        try: 
+            ## Give Kudos on loaded page ##
+            button_locator = self.page.locator(self.kudos_button_pattern)
             kudos_given = self.locate_kudos_buttons_and_maybe_give_kudos(button_locator=button_locator)
-            if not kudos_given:
-                curr_retry -= 1
-        send_telegram.send_to_telegram('send_telegram.send_to_telegram')
-        print("That's all, folks! Terminating... ")
+            curr_retry = self.max_retry_scroll
 
-        self.browser.close()
+            ## Scroll down and repeat ##
+            while kudos_given or curr_retry > 0:
+                curr_duration = time.time() - self.start_time
+                if curr_duration > self.max_run_duration:
+                    print("Max run duration reached.")
+                    break
+                self.page.mouse.wheel(0, 12000)
+                time.sleep(5)
+                kudos_given = self.locate_kudos_buttons_and_maybe_give_kudos(button_locator=button_locator)
+                if not kudos_given:
+                    curr_retry -= 1
+            self.browser.close()
+            send_telegram.send_to_telegram('send_telegram.send_to_telegram')
+            print("That's all, folks! Terminating... ")
+        except Exception as e:
+            print(traceback.format_exc())
+    
+    def __del__(self):
+        print("I'm being automatically destroyed. Goodbye!")    
         
 
 def main():
@@ -102,6 +108,14 @@ def main():
     kg.email_login()
     kg.give_kudos()
 
+#to call from FAST API
+async def fromAPI():
+    send_telegram.send_to_telegram('Trying to give kudos')
+    kg = KudosGiver()
+    kg.email_login()
+    kg.give_kudos()
+
+    return "Request Finished"
 
 if __name__ == "__main__":
     main()

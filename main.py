@@ -1,18 +1,27 @@
 from fastapi import FastAPI
-import os
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import PlainTextResponse
+from fastapi.responses import JSONResponse
 import send_telegram
-import time
-from playwright.sync_api import sync_playwright, TimeoutError
 from jproperties import Properties
 import give_kudos
-
+import uvicorn
+import traceback
+from pydantic import BaseModel 
+from datetime import datetime
 
 
 app = FastAPI()
 
-expected_token = 'eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJEYW5pZWwgTGFyYSIsIlVzZXJuYW1lIjoiVGFpa3VuIiwiZXhwIjoxNjcwMjY3NzkwLCJpYXQiOjE2NzAyNjc3OTB9.UIBkMMBkQ6OJgbt-QFASxVVlBG9MpPLJ7Br0YOOJEf0'
+configs = Properties()
+with open('app-config.properties', 'rb') as config_file:
+    configs.load(config_file)
+EXPECTED_TOKEN=configs.get("TOKEN").data
 
+class Item(BaseModel):
+    title: str
+    token: str
+    timestamp: datetime
 
 @app.get("/")
 def root():
@@ -23,15 +32,28 @@ def root():
 
 @app.get("/strava-kudos/{token}", response_class=PlainTextResponse)
 def kudos(token: str):
+    # current date and time
+    now = datetime.now()
+    item = Item(title = "Kudos giving ok", token = token, timestamp=datetime.timestamp(now))
+    json_compatible_item_data = jsonable_encoder(item)
     
-    if token == expected_token:
-        print('giving kudos')
-        send_telegram.send_to_telegram('Trying to give kudos')
-        kg = give_kudos.KudosGiver()
-        kg.email_login()
-        kg.give_kudos()
+    if token == EXPECTED_TOKEN:
+        try:
+            print('giving kudos')
+            kg = give_kudos.KudosGiver()
+            kg.email_login()
+            kg.give_kudos()
+            kg.__del__()
+            del kg
+            #give_kudos.fromAPI()
+            
+        except Exception as e:
+            print(traceback.format_exc())
+            print(e)
+            print("Exception thrown, claro, algo pasa") #
     else:
         print('Missing token')
+    return JSONResponse(content=json_compatible_item_data)
 
-    #FIXME: something worng happens after finih give_kudos: AttributeError: 'list' object has no attribute 'encode'
-    return {"Give kudos done sucessfully"}
+if __name__ == "__main__":
+    uvicorn.run(app="main:app", port=8000)
