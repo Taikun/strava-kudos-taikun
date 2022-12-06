@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 #properties file
-app-config.properties/
+app-config.properties
 
 # C extensions
 *.so
