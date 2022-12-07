@@ -3,3 +3,4 @@ pytest-playwright
 fastapi
 uvicorn
 jproperties
+flask
