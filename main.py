@@ -4,7 +4,7 @@ from fastapi.responses import PlainTextResponse
 from fastapi.responses import JSONResponse
 import send_telegram
 from jproperties import Properties
-import give_kudos
+from give_kudos import KudosGiver
 import uvicorn
 import traceback
 from pydantic import BaseModel 
@@ -40,12 +40,12 @@ def kudos(token: str):
     if token == EXPECTED_TOKEN:
         try:
             print('giving kudos')
-            kg = give_kudos.KudosGiver()
+            kg = KudosGiver()
             kg.email_login()
             kg.give_kudos()
             kg.__del__()
             del kg
-            #give_kudos.fromAPI()
+            
             
         except Exception as e:
             print(traceback.format_exc())
