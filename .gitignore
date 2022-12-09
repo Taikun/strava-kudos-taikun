@@ -6,6 +6,10 @@ __pycache__/
 #ignore all properties
 *.properties
 
+#files for random tests
+test.py
+VirtualEnv.txt
+
 # C extensions
 *.so
 
@@ -130,6 +134,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+strava-kudos/
 
 # Spyder project settings
 .spyderproject
