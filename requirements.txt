@@ -6,3 +6,4 @@ jproperties
 flask
 black
 strava-cli
+discord
