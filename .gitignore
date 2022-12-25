@@ -136,6 +136,9 @@ env.bak/
 venv.bak/
 strava-kudos/
 
+#nohup file
+nohup.out
+
 # Spyder project settings
 .spyderproject
 .spyproject
