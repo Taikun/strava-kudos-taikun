@@ -1,1 +1,1 @@
-nohup python3 mainDiscord.py &
+nohup python3 discordBot.py > nohupDiscord.nohut &

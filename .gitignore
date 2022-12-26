@@ -138,6 +138,7 @@ strava-kudos/
 
 #nohup file
 nohup.out
+nohupDiscord.out
 
 # Spyder project settings
 .spyderproject
