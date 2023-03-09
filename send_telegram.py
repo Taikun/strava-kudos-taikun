@@ -2,15 +2,12 @@ import os
 
 import requests
 from jproperties import Properties
-
+from dotenv import load_dotenv, find_dotenv
 
 def send_to_telegram(message):
 
-    configs = Properties()
-    with open("kudos.properties", "rb") as config_file:
-        configs.load(config_file)
-    TOKEN_ID = configs.get("TOKEN_ID").data
-    CHAT_ID = configs.get("CHAT_ID").data
+    TOKEN_ID = os.getenv('TOKEN_ID')
+    CHAT_ID = os.getenv('CHAT_ID')
 
     apiURL = f"https://api.telegram.org/bot{TOKEN_ID}/sendMessage"
 

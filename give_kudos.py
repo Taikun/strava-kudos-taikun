@@ -7,18 +7,14 @@ import traceback
 
 from playwright.sync_api import sync_playwright, TimeoutError
 from playwright.async_api import async_playwright
-
+from dotenv import load_dotenv, find_dotenv
 
 BASE_URL = "https://www.strava.com/"
 
+load_dotenv(find_dotenv(raise_error_if_not_found=True))
+STRAVA_EMAIL = os.getenv('STRAVA_EMAIL')
+STRAVA_PASSWORD = os.getenv('STRAVA_PASSWORD')
 
-configs = Properties()
-with open("kudos.properties", "rb") as config_file:
-    configs.load(config_file)
-STRAVA_EMAIL = configs.get("STRAVA_EMAIL").data
-STRAVA_PASSWORD = configs.get("STRAVA_PASSWORD").data
-print("Mail: " + STRAVA_EMAIL)
-print("Pwd: " + STRAVA_PASSWORD)
 
 
 class KudosGiver:

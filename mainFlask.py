@@ -1,5 +1,6 @@
 import traceback
 from datetime import datetime
+import os
 
 from flask import Flask
 from jproperties import Properties
@@ -7,13 +8,13 @@ from pydantic import BaseModel
 
 import send_telegram
 from give_kudos import KudosGiver
+from dotenv import load_dotenv, find_dotenv
 
 app = Flask(__name__)
 
-configs = Properties()
-with open("kudos.properties", "rb") as config_file:
-    configs.load(config_file)
-EXPECTED_TOKEN = configs.get("TOKEN").data
+
+load_dotenv(find_dotenv(raise_error_if_not_found=True))
+EXPECTED_TOKEN = os.getenv('TOKEN')
 
 
 class Item(BaseModel):
