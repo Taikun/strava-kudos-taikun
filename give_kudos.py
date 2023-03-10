@@ -11,7 +11,7 @@ from dotenv import load_dotenv, find_dotenv
 
 BASE_URL = "https://www.strava.com/"
 
-load_dotenv(find_dotenv(raise_error_if_not_found=True))
+load_dotenv(find_dotenv())
 STRAVA_EMAIL = os.getenv('STRAVA_EMAIL')
 STRAVA_PASSWORD = os.getenv('STRAVA_PASSWORD')
 

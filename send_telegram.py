@@ -6,6 +6,7 @@ from dotenv import load_dotenv, find_dotenv
 
 def send_to_telegram(message):
 
+    load_dotenv(find_dotenv())
     TOKEN_ID = os.getenv('TOKEN_ID')
     CHAT_ID = os.getenv('CHAT_ID')
 

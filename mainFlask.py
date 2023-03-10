@@ -13,7 +13,7 @@ from dotenv import load_dotenv, find_dotenv
 app = Flask(__name__)
 
 
-load_dotenv(find_dotenv(raise_error_if_not_found=True))
+load_dotenv(find_dotenv())
 EXPECTED_TOKEN = os.getenv('TOKEN')
 
 
