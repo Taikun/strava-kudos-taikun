@@ -34,7 +34,7 @@ def read_root():
 def root():
     send_telegram.send_to_telegram("Welcome")
     print("Welcome")
-    return {"message": "Welcome to Give Kudos Utility"}
+    return {"message": "Welcome to Give Kudos Utility, v1"}
 
 
 @app.get("/strava-kudos/{token}", response_class=PlainTextResponse)

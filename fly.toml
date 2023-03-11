@@ -1,4 +1,4 @@
-# fly.toml file generated for kudos on 2023-03-09T21:11:10+01:00
+# fly.toml file generated for kudos on 2023-03-10T19:30:50+01:00
 
 app = "kudos"
 kill_signal = "SIGINT"
