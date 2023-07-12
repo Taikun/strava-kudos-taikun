@@ -31,6 +31,13 @@ class KudosGiver:
         self.start_time = time.time()
         self.num_entries = 100
         self.web_feed_entry_pattern = '[data-testid=web-feed-entry]'
+<<<<<<< HEAD
+=======
+
+        p = sync_playwright().start()
+        self.browser = p.firefox.launch() # does not work in chrome
+        self.page = self.browser.new_page()
+>>>>>>> main
 
         p = sync_playwright().start()
         self.browser = p.firefox.launch()  # does not work in chrome
@@ -59,6 +66,7 @@ class KudosGiver:
                 return
             except:
                 time.sleep(1)
+<<<<<<< HEAD
 
     def _get_page_and_own_profile(self):
         """
@@ -67,6 +75,16 @@ class KudosGiver:
         self.page.goto(os.path.join(BASE_URL, f"dashboard?num_entries={self.num_entries}"), wait_until="networkidle")
         self.own_profile_id = self.page.locator("#athlete-profile .card-body > a").get_attribute('href').split("/athletes/")[1]
 
+=======
+
+    def _get_page_and_own_profile(self):
+        """
+        Limit activities count by GET parameter and get own profile ID.
+        """
+        self.page.goto(os.path.join(BASE_URL, f"dashboard?num_entries={self.num_entries}"), wait_until="networkidle")
+        self.own_profile_id = self.page.locator("#athlete-profile .card-body > a").get_attribute('href').split("/athletes/")[1]
+
+>>>>>>> main
     def locate_kudos_buttons_and_maybe_give_kudos(self, web_feed_entry_locator) -> int:
         """
         input: playwright.locator class
