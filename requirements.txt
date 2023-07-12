@@ -1,4 +1,5 @@
-playwright==1.27.1
+<<<<<<< HEAD
+playwright==1.32.1
 pytest-playwright
 fastapi
 uvicorn
@@ -7,3 +8,6 @@ flask
 black
 strava-cli
 discord
+=======
+playwright==1.30.0
+>>>>>>> main
