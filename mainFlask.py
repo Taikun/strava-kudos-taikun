@@ -58,6 +58,7 @@ def hello():
 
 # main driver function
 if __name__ == "__main__":
+    load_dotenv(find_dotenv())
 
     # run() method of Flask class runs the application
     # on the local development server.
